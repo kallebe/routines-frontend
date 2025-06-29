@@ -37,8 +37,13 @@ function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-secondary-background">
-      <Card className='w-md mx-auto'>
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{
+        background: 'linear-gradient(135deg, var(--main) 15%, var(--chart-3) 100%)',
+      }}
+    >
+      <Card className='w-md max-w-full mx-auto'>
         <form onSubmit={handleSubmit} className="space-y-4">
           <CardHeader>
             <CardTitle>Entrar</CardTitle>
@@ -72,6 +77,7 @@ function Login() {
                 <Input
                   id="password"
                   type="password"
+                  placeholder='********'
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
