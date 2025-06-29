@@ -17,3 +17,19 @@ export async function login(email: string, password: string) {
     throw error;
   }
 }
+
+export async function registerUser(email: string, password: string, name: string) {
+  try {
+    const response = await api.post('/users', {
+      user: { email: email, password: password, name: name }
+    });
+    
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.error || 'Erro ao cadastrar usuário');
+    }
+
+    throw error;
+  }
+}

@@ -1,39 +1,29 @@
-import { useEffect, useState } from 'react';
-import { login } from '../api/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { registerUser } from "@/api/auth";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+function NewUser() {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    document.title = 'Routine | Entrar';
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await login(email, password);
-      localStorage.setItem('token', response.token);
-      navigate('/');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setError('E-mail ou senha inválidos.');
+      await registerUser(email, password, name);
+      navigate('/login');
+    } catch (error: any) {
+      console.error('Erro ao cadastrar usuário:', error);
+      setError(error.response?.data?.error || 'Erro ao cadastrar usuário.');
     }
 
     setLoading(false);
@@ -49,13 +39,23 @@ function Login() {
       <Card className='w-md max-w-full mx-auto'>
         <form onSubmit={handleSubmit} className="space-y-4">
           <CardHeader>
-            <CardTitle>Entrar</CardTitle>
+            <CardTitle>Cadastrar</CardTitle>
             <CardDescription>
-              Por favor, insira suas credenciais para acessar sua conta.
+              Por favor, preencha os campos para cadastrar a sua conta.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Nome</Label>
+                <Input
+                  id="name"
+                  placeholder='Ex: Jurandismar Santana'
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  required
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">E-mail</Label>
                 <Input
@@ -68,15 +68,7 @@ function Login() {
                 />
               </div>
               <div className="grid gap-2">
-                <div className="flex flex-items-center">
-                  <Label htmlFor="password">Senha</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Esqueceu sua senha?
-                  </a>
-                </div>
+                <Label htmlFor="password">Senha</Label>
                 <Input
                   id="password"
                   type="password"
@@ -93,10 +85,10 @@ function Login() {
           </CardContent>
           <CardFooter className='flex flex-col gap-4'>
             <Button type='submit' className='w-full' onSubmit={handleSubmit} disabled={loading}>
-              {loading ? 'Entrando...' : 'Entrar'}
+              {loading ? 'Cadastrando...' : 'Cadastrar'}
             </Button>
             <div className="mt-4 text-center text-sm">
-              Não possui uma conta?{' '}<Link to="/new-user" className="underline underline-offset-4">Cadastre-se</Link>
+              Já possui uma conta?{' '} <Link to="/login" className="underline underline-offset-4">Entrar</Link>
             </div>
           </CardFooter>
         </form>
@@ -105,4 +97,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default NewUser;
