@@ -29,11 +29,13 @@ function Login() {
 
     try {
       const response = await login(email, password);
+      console.log('Login response:', response);
       localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
+
       navigate('/');
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setError('E-mail ou senha inválidos.');
+      setError(`Erro ao fazer login: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
     }
 
     setLoading(false);
