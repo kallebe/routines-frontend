@@ -29,9 +29,9 @@ function Tasks() {
   return (
     <div>
       <PageTitle title="Minhas Tarefas" />
-      <div className="flex flex-col gap-6 items-center p-8">
-        <Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button>
-        <div className="flex flex-col gap-6 w-6xl">
+      <div className="flex flex-col gap-6 items-center p-8 w-6xl mx-auto">
+        <Button className="w-fit self-end"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button>
+        <div className="flex flex-col gap-6 w-full">
           {tasks.map(task => (
             <TaskBox key={task.id} task={task} />
           ))}
