@@ -65,7 +65,8 @@
   
 @layer base {
   body {
-    @apply text-foreground font-base bg-background;
+    @apply text-foreground font-base;
+    background: linear-gradient(135deg, var(--main) 15%, var(--chart-3) 100%) no-repeat fixed;
   }
 
   h1, h2, h3, h4, h5, h6{

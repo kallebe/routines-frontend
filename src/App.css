@@ -1,3 +1,7 @@
 #root {
   width: 100%;
 }
+
+body {
+  background: 'linear-gradient(135deg, var(--main) 15%, var(--chart-3) 100%)'
+}

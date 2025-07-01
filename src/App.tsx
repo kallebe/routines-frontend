@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Routines from './pages/Routines'
 import NewUser from './pages/NewUser'
 import PrivateRoute from './components/PrivateRoute'
+import Tasks from './pages/Tasks'
 
 function App() {
   return (
@@ -16,6 +17,14 @@ function App() {
           element={
             <PrivateRoute>
               <Routines />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <PrivateRoute>
+              <Tasks />
             </PrivateRoute>
           }
         />
