@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { login } from '../api/auth';
+import { login } from '../api/api';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Card,
@@ -29,7 +29,6 @@ function Login() {
 
     try {
       const response = await login(email, password);
-      console.log('Login response:', response);
       localStorage.setItem('token', response.token);
       localStorage.setItem('user', JSON.stringify(response.user));
 

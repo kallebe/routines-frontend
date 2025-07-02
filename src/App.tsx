@@ -16,7 +16,7 @@ function App() {
           path="/"
           element={
             <PrivateRoute>
-              <Routines />
+              <Tasks />
             </PrivateRoute>
           }
         />
@@ -25,6 +25,14 @@ function App() {
           element={
             <PrivateRoute>
               <Tasks />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/routines"
+          element={
+            <PrivateRoute>
+              <Routines />
             </PrivateRoute>
           }
         />

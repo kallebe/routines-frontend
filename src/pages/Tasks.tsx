@@ -1,36 +1,29 @@
+import { getTasks } from "@/api/api";
+import FormTaskDialog from "@/components/routines/form_task_dialog";
 import PageTitle from "@/components/routines/page_title";
 import { TaskBox } from "@/components/routines/tasks";
 import { Button } from "@/components/ui/button";
+import type { Task } from "@/interfaces/task";
 import { PlusIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 function Tasks() {
-  const tasks = [
-    {
-      id: 1,
-      title: "Preparar Almoço",
-      duration: 120,
-      category: { title: "Dia-a-dia", color: "#FFD700" }
-    },
-    {
-      id: 2,
-      title: "Estudar React",
-      duration: 45,
-      category: { title: "Estudos", color: "#7AFFB6" }
-    },
-    {
-      id: 3,
-      title: "Ir ao mercado",
-      duration: 30,
-      category: { title: "Compras", color: "#7A83FF" }
-    }
-  ]
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [alert, setAlert] = useState('');
+
+  useEffect(() => {
+    document.title = 'Routine | Minhas Tarefas';
+    getTasks()
+      .then(data => setTasks(data))
+      .catch(err => setAlert(`Erro ao buscar tarefas: ${err.message}`));
+  }, []);
 
   return (
     <div>
       <PageTitle title="Minhas Tarefas" />
       <div className="flex flex-col gap-6 items-center p-8 w-6xl mx-auto">
-        <Button className="w-fit self-end"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button>
+        <FormTaskDialog className="self-end"><Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button></FormTaskDialog>
         <div className="flex flex-col gap-6 w-full">
           {tasks.map(task => (
             <TaskBox key={task.id} task={task} />
