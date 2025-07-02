@@ -7,17 +7,32 @@ import React, { useEffect } from "react";
 import { createTask, getCategories } from "@/api/api";
 import type { Category } from "@/interfaces/category";
 
-function FormTaskDialog({ children, className }: { children: React.ReactNode, className?: string }) {
+function FormTaskDialog({
+  children,
+  className,
+  onTaskSaved
+}: {
+  children: React.ReactNode,
+  className?: string,
+  onTaskSaved?: () => void
+ }) {
   const [title, setTitle] = React.useState('');
   const [duration, setDuration] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState<string>('');
   const [categories, setCategories] = React.useState<Category[]>([]);
+  const [open, setOpen] = React.useState(false);
 
   const saveTask = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Saving task with:', { title, duration, selectedCategory });
 
-    await createTask(title, parseInt(duration), selectedCategory)
+    await createTask(title, parseInt(duration), selectedCategory);
+
+    setOpen(false);
+    setTitle('');
+    setDuration('');
+    setSelectedCategory('');
+    if (onTaskSaved) onTaskSaved();
   }
 
   useEffect(() => {
@@ -27,7 +42,7 @@ function FormTaskDialog({ children, className }: { children: React.ReactNode, cl
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className={className}>
         {children}
       </DialogTrigger>

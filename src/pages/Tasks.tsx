@@ -12,18 +12,22 @@ function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [alert, setAlert] = useState('');
 
-  useEffect(() => {
-    document.title = 'Routine | Minhas Tarefas';
+  const fetchTasks = () => {
     getTasks()
       .then(data => setTasks(data))
       .catch(err => setAlert(`Erro ao buscar tarefas: ${err.message}`));
+  }
+
+  useEffect(() => {
+    document.title = 'Routine | Minhas Tarefas';
+    fetchTasks();
   }, []);
 
   return (
     <div>
       <PageTitle title="Minhas Tarefas" />
       <div className="flex flex-col gap-6 items-center p-8 w-6xl mx-auto">
-        <FormTaskDialog className="self-end"><Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button></FormTaskDialog>
+        <FormTaskDialog onTaskSaved={fetchTasks} className="self-end"><Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button></FormTaskDialog>
         <div className="flex flex-col gap-6 w-full">
           {tasks.map(task => (
             <TaskBox key={task.id} task={task} />
