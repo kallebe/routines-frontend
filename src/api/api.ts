@@ -72,6 +72,24 @@ export async function createTask(title: string, duration: number, categoryId: st
   }
 }
 
+export async function deleteTask(taskId: number) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.delete(`/tasks/${taskId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data.error || 'Erro ao deletar tarefa');
+    }
+
+    throw error;
+  }
+}
+
 export async function getCategories() {
   try {
     const token = localStorage.getItem('token');

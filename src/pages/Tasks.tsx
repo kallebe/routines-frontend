@@ -1,4 +1,4 @@
-import { getTasks } from "@/api/api";
+import { deleteTask, getTasks } from "@/api/api";
 import FormTaskDialog from "@/components/routines/form_task_dialog";
 import PageTitle from "@/components/routines/page_title";
 import { TaskBox } from "@/components/routines/tasks";
@@ -19,6 +19,15 @@ function Tasks() {
       .catch(err => toast.error(`Erro ao buscar tarefas: ${err.message}`));
   }
 
+  const handleDeleteTask = (taskId: number) => {
+    deleteTask(taskId)
+      .then(() => {
+        toast.success('Tarefa excluída com sucesso!');
+        fetchTasks();
+      })
+      .catch(err => toast.error(`Erro ao excluir tarefa: ${err.message}`));
+  };
+
   useEffect(() => {
     document.title = 'Routine | Minhas Tarefas';
     fetchTasks();
@@ -32,7 +41,7 @@ function Tasks() {
         <FormTaskDialog onTaskSaved={fetchTasks} className="self-end"><Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button></FormTaskDialog>
         <div className="flex flex-col gap-6 w-full">
           {tasks.map(task => (
-            <TaskBox key={task.id} task={task} />
+            <TaskBox key={task.id} task={task} onDelete={handleDeleteTask} />
           ))}
         </div>
       </div>

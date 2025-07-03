@@ -15,7 +15,7 @@ function formatDuration(minutes: number): string {
   return result;
 }
 
-function TaskBox({ task }: { task: Task }) {
+function TaskBox({ task, onDelete }: { task: Task, onDelete: (taskId: number) => void }) {
   return (
     <Card className="max-w-screen w-full flex flex-row justify-between items-center gap-6 px-6">
       <span className="w-2/5">{task.title}</span>
@@ -30,7 +30,7 @@ function TaskBox({ task }: { task: Task }) {
           <Pen />
           <span>Editar</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onDelete(task.id)}>
           <Trash2 />
           <span>Excluir</span>
         </DropdownMenuItem>
