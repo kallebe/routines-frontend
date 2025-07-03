@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import React, { useEffect } from "react";
 import { createTask, getCategories } from "@/api/api";
 import type { Category } from "@/interfaces/category";
+import { toast } from "sonner";
 
 function FormTaskDialog({
   children,
@@ -24,7 +25,6 @@ function FormTaskDialog({
 
   const saveTask = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Saving task with:', { title, duration, selectedCategory });
 
     await createTask(title, parseInt(duration), selectedCategory);
 
@@ -32,7 +32,9 @@ function FormTaskDialog({
     setTitle('');
     setDuration('');
     setSelectedCategory('');
+    
     if (onTaskSaved) onTaskSaved();
+    toast.success('Tarefa salva com sucesso!');
   }
 
   useEffect(() => {

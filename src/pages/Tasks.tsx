@@ -3,19 +3,20 @@ import FormTaskDialog from "@/components/routines/form_task_dialog";
 import PageTitle from "@/components/routines/page_title";
 import { TaskBox } from "@/components/routines/tasks";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import type { Task } from "@/interfaces/task";
 import { PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [alert, setAlert] = useState('');
 
   const fetchTasks = () => {
     getTasks()
       .then(data => setTasks(data))
-      .catch(err => setAlert(`Erro ao buscar tarefas: ${err.message}`));
+      .catch(err => toast.error(`Erro ao buscar tarefas: ${err.message}`));
   }
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function Tasks() {
 
   return (
     <div>
+      <Toaster />
       <PageTitle title="Minhas Tarefas" />
       <div className="flex flex-col gap-6 items-center p-8 w-6xl mx-auto">
         <FormTaskDialog onTaskSaved={fetchTasks} className="self-end"><Button className="w-fit"><PlusIcon className="w-4 h-4" /> Adicionar Tarefa</Button></FormTaskDialog>

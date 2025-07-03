@@ -53,7 +53,6 @@ export async function getTasks() {
 }
 
 export async function createTask(title: string, duration: number, categoryId: string) {
-  console.log('Creating task with:', { title, duration, categoryId });
   try {
     const token = localStorage.getItem('token');
     const response = await api.post('/tasks', {
