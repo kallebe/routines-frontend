@@ -2,6 +2,18 @@ import axios from 'axios';
 
 const api = axios.create({ baseURL: 'http://localhost:3001' });
 
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export async function login(email: string, password: string) {
   try {
     const response = await api.post('/login', {
@@ -11,7 +23,7 @@ export async function login(email: string, password: string) {
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao fazer login');
+      throw new Error(error.response.data || 'Erro ao fazer login');
     }
 
     throw error;
@@ -27,7 +39,7 @@ export async function registerUser(email: string, password: string, name: string
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao cadastrar usuário');
+      throw new Error(error.response.data || 'Erro ao cadastrar usuário');
     }
 
     throw error;
@@ -45,7 +57,7 @@ export async function getTasks() {
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao buscar tarefas');
+      throw new Error(error.response.data || 'Erro ao buscar tarefas');
     }
 
     throw error;
@@ -65,7 +77,7 @@ export async function createTask(title: string, duration: number, categoryId: st
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao criar tarefa');
+      throw new Error(error.response.data || 'Erro ao criar tarefa');
     }
 
     throw error;
@@ -83,7 +95,7 @@ export async function deleteTask(taskId: number) {
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao deletar tarefa');
+      throw new Error(error.response.data || 'Erro ao deletar tarefa');
     }
 
     throw error;
@@ -101,7 +113,7 @@ export async function getCategories() {
     return response.data;
   } catch (error: any) {
     if (error.response) {
-      throw new Error(error.response.data.error || 'Erro ao buscar categorias');
+      throw new Error(error.response.data || 'Erro ao buscar categorias');
     }
 
     throw error;

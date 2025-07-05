@@ -23,24 +23,28 @@ function FormTaskDialog({
   const [categories, setCategories] = React.useState<Category[]>([]);
   const [open, setOpen] = React.useState(false);
 
-  const saveTask = async (e: React.FormEvent) => {
+  const saveTask = (e: React.FormEvent) => {
     e.preventDefault();
 
-    await createTask(title, parseInt(duration), selectedCategory);
-
-    setOpen(false);
-    setTitle('');
-    setDuration('');
-    setSelectedCategory('');
-    
-    if (onTaskSaved) onTaskSaved();
-    toast.success('Tarefa salva com sucesso!');
+    createTask(title, parseInt(duration), selectedCategory)
+      .then(() => {
+        setOpen(false);
+        setTitle('');
+        setDuration('');
+        setSelectedCategory('');
+        
+        if (onTaskSaved) onTaskSaved();
+        toast.success('Tarefa salva com sucesso!');
+      })
+      .catch(err => {
+        toast.error(`Erro ao salvar tarefa: ${err.message}`);
+      });
   }
 
   useEffect(() => {
     getCategories()
       .then(data => setCategories(data))
-      .catch(err => console.error(`Erro ao buscar categorias: ${err.message}`));
+      .catch(err => toast.error(`Erro ao buscar categorias: ${err.message}`));
   }, []);
 
   return (
