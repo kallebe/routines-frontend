@@ -5,6 +5,7 @@ import Routines from './pages/Routines'
 import NewUser from './pages/NewUser'
 import PrivateRoute from './components/PrivateRoute'
 import Tasks from './pages/Tasks'
+import Categories from './pages/Categories'
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
           element={
             <PrivateRoute>
               <Tasks />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <PrivateRoute>
+              <Categories />
             </PrivateRoute>
           }
         />

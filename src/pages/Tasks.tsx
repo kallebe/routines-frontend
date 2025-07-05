@@ -1,7 +1,7 @@
 import { deleteTask, getTasks } from "@/api/api";
 import FormTaskDialog from "@/components/routines/form_task_dialog";
 import PageTitle from "@/components/routines/page_title";
-import { TaskBox } from "@/components/routines/tasks";
+import { TaskBox } from "@/components/routines/task_box";
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import type { Task } from "@/interfaces/task";

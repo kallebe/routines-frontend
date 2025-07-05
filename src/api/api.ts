@@ -14,6 +14,8 @@ api.interceptors.response.use(
   }
 );
 
+// ------------------- Sessions ------------------- //
+
 export async function login(email: string, password: string) {
   try {
     const response = await api.post('/login', {
@@ -45,6 +47,8 @@ export async function registerUser(email: string, password: string, name: string
     throw error;
   }
 }
+
+// ------------------- Tasks ------------------- //
 
 export async function getTasks() {
   try {
@@ -102,6 +106,8 @@ export async function deleteTask(taskId: number) {
   }
 }
 
+// ------------------- Categories ------------------- //
+
 export async function getCategories() {
   try {
     const token = localStorage.getItem('token');
@@ -114,6 +120,44 @@ export async function getCategories() {
   } catch (error: any) {
     if (error.response) {
       throw new Error(error.response.data || 'Erro ao buscar categorias');
+    }
+
+    throw error;
+  }
+}
+
+export async function createCategory(title: string, color: string) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.post('/categories', {
+      category: { title: title, color: color }
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || 'Erro ao criar categoria');
+    }
+
+    throw error;
+  }
+}
+
+export async function deleteCategory(categoryId: number) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.delete(`/categories/${categoryId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || 'Erro ao deletar categoria');
     }
 
     throw error;
