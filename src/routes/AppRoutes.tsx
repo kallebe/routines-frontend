@@ -11,38 +11,12 @@ export function AppRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/new-user" element={<NewUser />} />
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <Tasks />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/tasks"
-        element={
-          <PrivateRoute>
-            <Tasks />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/categories"
-        element={
-          <PrivateRoute>
-            <Categories />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/routines"
-        element={
-          <PrivateRoute>
-            <Routines />
-          </PrivateRoute>
-        }
-      />
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<Tasks />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/routines" element={<Routines />} />
+      </Route>
     </Routes>
   );
 }
