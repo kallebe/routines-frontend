@@ -106,6 +106,64 @@ export async function deleteTask(taskId: number) {
   }
 }
 
+// ------------------- Routines ------------------- //
+
+export async function getRoutines() {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.get('/user_routines', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || 'Erro ao buscar rotinas');
+    }
+
+    throw error;
+  }
+}
+
+export async function createRoutine(title: string, days_of_week: string) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.post('/user_routines', {
+      task: { title: title, days_of_week: days_of_week }
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || 'Erro ao criar rotina');
+    }
+
+    throw error;
+  }
+}
+
+export async function deleteRoutine(routineId: number) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await api.delete(`/user_routines/${routineId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response) {
+      throw new Error(error.response.data || 'Erro ao deletar rotina');
+    }
+
+    throw error;
+  }
+}
+
 // ------------------- Categories ------------------- //
 
 export async function getCategories() {
