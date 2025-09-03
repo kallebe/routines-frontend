@@ -102,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </span>
                     <span className="truncate text-xs">{user.email}</span>
                   </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
+                  <ChevronsUpDown className="ml-auto size-4 group-data-[state=collapsed]:hidden" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -149,11 +149,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroupLabel>Routine</SidebarGroupLabel>
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        <SidebarGroup>
           <SidebarMenu>
             {data.projects.map((item) => (
               <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton asChild tooltip={item.name}>
                   <Link to={item.url}>
                     <item.icon />
                     <span>{item.name}</span>
