@@ -6,11 +6,13 @@ import { Toaster } from "@/components/ui/sonner";
 import type { Routine } from "@/interfaces/routine";
 import { PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 
 function Routines() {
   const [routines, setRoutines] = useState<Routine[]>([]);
+  const navigate = useNavigate();
 
   const fetchTasks = () => {
     getRoutines()
@@ -37,7 +39,7 @@ function Routines() {
       <Toaster />
       <PageTitle title="Minhas Rotinas" />
       <div className="flex flex-col gap-6 items-center p-8 w-6xl mx-auto">
-        <Button className="w-fit self-end"><PlusIcon className="w-4 h-4" /> Adicionar Rotina</Button>
+        <Button className="w-fit self-end" onClick={() => navigate('/new-routine')}><PlusIcon className="w-4 h-4" /> Adicionar Rotina</Button>
         <div className="flex flex-col gap-6 w-full">
           {routines.map(routine => (
             <RoutineBox key={routine.id} routine={routine} onDelete={handleDeleteRoutine} />

@@ -1,6 +1,7 @@
 import PrivateRoute from "@/components/PrivateRoute";
 import Categories from "@/pages/Categories";
 import Login from "@/pages/Login";
+import NewRoutine from "@/pages/NewRoutine";
 import NewUser from "@/pages/NewUser";
 import Routines from "@/pages/Routines";
 import Tasks from "@/pages/Tasks";
@@ -16,6 +17,7 @@ export function AppRoutes() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/routines" element={<Routines />} />
+        <Route path="/new-routine" element={<NewRoutine />} />
       </Route>
     </Routes>
   );
