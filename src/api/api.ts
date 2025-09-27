@@ -1,3 +1,4 @@
+import type { TaskRoutine } from '@/interfaces/task_routine';
 import axios from 'axios';
 
 const api = axios.create({ baseURL: 'http://localhost:3001' });
@@ -126,11 +127,11 @@ export async function getRoutines() {
   }
 }
 
-export async function createRoutine(title: string, days_of_week: string) {
+export async function createRoutine(title: string, days_of_week: string, task_routines: TaskRoutine[]) {
   try {
     const token = localStorage.getItem('token');
     const response = await api.post('/user_routines', {
-      task: { title: title, days_of_week: days_of_week }
+      user_routine: { title: title, days_of_week: days_of_week, task_routines_attributes: task_routines }
     }, {
       headers: {
         Authorization: `Bearer ${token}`
