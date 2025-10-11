@@ -4,24 +4,10 @@ import { DropdownMenuItem } from "../ui/dropdown-menu";
 import ActionsMenu from "./actions_menu";
 import type { Routine } from "@/interfaces/routine";
 
-function formatDaysOfWeek(days: string): string {
-  const dayMap: { [key: string]: string } = {
-    '0': 'Dom',
-    '1': 'Seg',
-    '2': 'Ter',
-    '3': 'Qua',
-    '4': 'Qui',
-    '5': 'Sex',
-    '6': 'Sáb'
-  };
-  return days.split(',').map(day => dayMap[day] || '').join(', ');
-}
-
 function RoutineBox({ routine, onDelete }: { routine: Routine, onDelete: (routineId: number) => void }) {
   return (
     <Card className="max-w-screen w-full flex flex-row justify-between items-center gap-6 px-6">
-      <span className="w-2/5">{routine.title}</span>
-      <span className="w-2/5">{formatDaysOfWeek(routine.days_of_week)}</span>
+      <span className="w-4/5">{routine.title}</span>
       <ActionsMenu>
         <DropdownMenuItem>
           <Pen />

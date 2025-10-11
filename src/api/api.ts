@@ -127,11 +127,17 @@ export async function getRoutines() {
   }
 }
 
-export async function createRoutine(title: string, days_of_week: string, task_routines: TaskRoutine[]) {
+export async function createRoutine(title: string, task_routines: TaskRoutine[]) {
   try {
     const token = localStorage.getItem('token');
+    const task_routines_attributes = task_routines.map(tr => ({
+      ...tr,
+      task_id: tr.task.id,
+      task: undefined, // Remove o objeto task
+    }));
+
     const response = await api.post('/user_routines', {
-      user_routine: { title: title, days_of_week: days_of_week, task_routines_attributes: task_routines }
+      user_routine: { title: title, task_routines_attributes: task_routines_attributes }
     }, {
       headers: {
         Authorization: `Bearer ${token}`

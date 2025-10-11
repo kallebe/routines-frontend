@@ -36,7 +36,7 @@ function FormTaskRoutineDialog({
     setEnd('')
 
     if (onTaskSaved) onTaskSaved(taskRoutine);
-      toast.success('Tarefa salva com sucesso!');
+      toast.success('Tarefa adicionada com sucesso!');
   }
 
   const selectTask = (id: string) => {
